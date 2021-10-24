@@ -1,0 +1,10 @@
+.container {
+  margin: 10px 50px;
+}
+
+.frame_container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+}
