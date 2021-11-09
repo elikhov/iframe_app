@@ -1,11 +1,39 @@
 .container{
-  display: grid;
-  grid-template-columns: auto;
-  grid-template-columns: 500px repeat(2, 100px) 110px 270px;
+  display: flex;
+  flex-direction: row;
   gap: 10px;
+}
+
+.url{
+  width: 300px;
 }
 
 .button{
   margin-top: 30px;
   width: 150px;
+}
+
+.actionButton{
+  width: 100%;
+}
+
+.width, .height {
+  width: 80px;
+}
+
+.checkboxContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 30px;
+  gap: 5px;
+}
+
+.checkboxes{
+  display: flex;
+  flex-direction: column;
+}
+
+.btn{
+  height: 40px;
 }

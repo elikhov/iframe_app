@@ -1,26 +1,45 @@
-import React, {useState} from 'react'
+import React, { Component } from 'react'
 
 import { Settings, IframePlayer } from '../'
+import { outputMessages, inputMessages, sendMessage } from '../../utils/messages'
 
 import style from './page.module.css'
 
-export const Page = () => {
-  const [config, setConfig] = useState(null)
+export class Page extends Component {
+  // constructor(props){
+  //   super(props)
+  // }
 
-  return (
-    <div className={style.container}>
-      <Settings
-        currentConfig={config}
-        setCurrentConfig={(newConfig) => setConfig(newConfig)}
-      />
-      {config && (
-        <IframePlayer
-          width={config.width}
-          height={config.height}
-          url={config.url}
-          resize={config.resize}
+  componentDidMount(){
+    window.addEventListener('message', this.handler)
+  }
+
+  componentWillUnmount(){
+    window.removeEventListener('message', this.handler)
+  }
+
+  handler = (event) => {
+    const { config } = this.props
+    if (config.autoplay && event?.data){
+      if (event.data?.event === inputMessages.ready && event.data?.alias === config?.alias){
+        sendMessage({ ...outputMessages.play, alias: config.alias}, config.name)
+      }
+    }
+  }
+  render(){
+    const { config, applyChanges, deleteIframe } = this.props
+
+    return (
+      <div className={style.container}>
+        <Settings
+          config={config}
+          applyChanges={applyChanges}
+          deleteIframe={deleteIframe}
         />
-      )}
-    </div>
-  )
+        <div className={style.frame_container}>
+          <IframePlayer config={config} />
+        </div>
+      </div>
+    )
+  }
 }
